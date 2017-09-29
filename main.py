@@ -41,9 +41,14 @@ def module(number=None):
 
 root = os.path.join(os.path.dirname(os.path.abspath(__file__)))
 @app.route('/styles/<path:path>')
-def send_javascripts(path):
+def send_stylesheets(path):
     app.logger.info("seeking for %s from %s at %s"%(path, request.headers.get('X-Forwarded-For', request.remote_addr), datetime.now()))
     return send_from_directory(root+"/styles", path)
+
+@app.route('/scripts/<path:path>')
+def send_javascripts(path):
+    app.logger.info("seeking for %s from %s at %s"%(path, request.headers.get('X-Forwarded-For', request.remote_addr), datetime.now()))
+    return send_from_directory(root+"/scripts", path)
 
 if __name__ == "__main__":
         app.debug = True
