@@ -82,7 +82,12 @@ hr {
 	color: white !important;
 }
 /* Side Navigation */
-
+@media(max-width:768px) {
+	#page-wrapper {
+	    position: absolute;
+	    top: 70px;
+	}
+}
 @media(min-width:768px) {
     .side-nav {
         position: fixed;
