@@ -6,6 +6,15 @@
     /*html, body, #wrapper, #page-wrapper {height: 100%; overflow: hidden;}*/
 }
 
+/*instructions button bottom*/
+@media(min-width:992px) {
+  .side-nav>li:last-child {
+    position: absolute;
+    bottom: 0;
+    border-top: 1px solid white;
+  }
+}
+
 nav {
 	padding: 10px;
 }
@@ -80,6 +89,10 @@ hr {
 
 .navbar-brand {
 	color: white !important;
+}
+
+.alert-warning {
+	color: black !important;
 }
 /* Side Navigation */
 @media(max-width:768px) {
