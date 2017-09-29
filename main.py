@@ -39,6 +39,12 @@ def module(number=None):
         except Exception as e:
             return render_template('error.html')
 
+root = os.path.join(os.path.dirname(os.path.abspath(__file__)))
+@app.route('/styles/<path:path>')
+def send_javascripts(path):
+    app.logger.info("seeking for %s from %s at %s"%(path, request.headers.get('X-Forwarded-For', request.remote_addr), datetime.now()))
+    return send_from_directory(root+"/styles", path)
+
 if __name__ == "__main__":
         app.debug = True
         app.run(host="0.0.0.0")
