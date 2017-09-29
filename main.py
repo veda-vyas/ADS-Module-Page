@@ -17,10 +17,9 @@ from requests.exceptions import HTTPError
 root = os.path.join(os.path.dirname(os.path.abspath(__file__)))
 
 class Auth:
-    CLIENT_ID = ('891614416155-5t5babc77fivqfslma1c3u6r2r9fp1o1'
-                 '.apps.googleusercontent.com')
-    CLIENT_SECRET = ' UnGr0t5VT0d3l4PLgICkQoy6 '
-    REDIRECT_URI = 'http://localhost:5000/oauth2callback'
+    CLIENT_ID = ('891614416155-5t5babc77fivqfslma1c3u6r2r9fp1o1.apps.googleusercontent.com')
+    CLIENT_SECRET = 'UnGr0t5VT0d3l4PLgICkQoy6'
+    REDIRECT_URI = 'https://localhost:5000/oauth2callback'
     AUTH_URI = 'https://accounts.google.com/o/oauth2/auth'
     TOKEN_URI = 'https://accounts.google.com/o/oauth2/token'
     USER_INFO = 'https://www.googleapis.com/userinfo/v2/me'
@@ -103,7 +102,7 @@ def login():
     auth_url, state = google.authorization_url(
         Auth.AUTH_URI, access_type='offline')
     session['oauth_state'] = state
-    return auth_url
+    return redirect(auth_url)
 
 @app.route('/oauth2callback')
 def callback():
@@ -147,7 +146,7 @@ def callback():
 @login_required
 def logout():
     logout_user()
-    return redirect(url_for('index'))
+    return redirect(url_for('login'))
 
 @app.route('/module/<number>')
 @login_required
