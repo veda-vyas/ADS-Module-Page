@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
     {% block head %}
-    <meta name="google-signin-client_id" content="891614416155-5t5babc77fivqfslma1c3u6r2r9fp1o1.apps.googleusercontent.com">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="/styles/navbar.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -29,11 +28,11 @@
             </div>
         </div>
         <!-- Top Menu Items -->
-        <ul class="nav navbar-right top-nav">
+        <!-- <ul class="nav navbar-right top-nav">
             <li id="signin" class="dropdown">
                 <div id="my-signin2"></div>
             </li>
-         </ul>
+         </ul> -->
         <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
         <div class="collapse navbar-collapse navbar-ex1-collapse">
             <ul class="nav navbar-nav side-nav">
@@ -66,32 +65,5 @@
   </div>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
   <script type="text/javascript" src="/scripts/module.js"></script>
-  <script type="text/javascript">
-    function onSuccess(googleUser) {
-      $("#signin").html('<div style="color:white; padding:0px; margin-top:15px">'+googleUser.getBasicProfile().getName()+'<small> &nbsp;&nbsp;(<a onclick="signOut();" style="color:white" href="#">Logout</a>)</small></div>');
-    }
-    function onFailure(error) {
-      console.log(error);
-    }
-    function renderButton() {
-      gapi.signin2.render('my-signin2', {
-        'scope': 'profile email',
-        'width': 100,
-        'height': 30,
-        'longtitle': false,
-        'theme': 'dark',
-        'onsuccess': onSuccess,
-        'onfailure': onFailure
-      });
-    }
-    function signOut() {
-      var auth2 = gapi.auth2.getAuthInstance();
-      auth2.signOut().then(function () {
-        // $("#signin").html('<div id="my-signin2" data-onsuccess="onSignIn"></div>');
-        location.href = "/"
-      });
-    }
-  </script>
-  <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
 </body>
 </html>
