@@ -7,6 +7,12 @@ pip install virtualenv
 virtualenv venv
 source venv/bin/activate
 pip install -r requirements.txt
+
+ * To Initialize DB for the first time. 
+    python
+    from main import db
+    db.create_all()
+
 python main.py
 ```
 
