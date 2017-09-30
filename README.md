@@ -17,12 +17,12 @@ sudo apt-get update
 sudo apt-get install postgresql-9.6
 ```
 
-### To setup a new password
+### Setup a new password
 
 ```
 sudo nano /etc/postgresql/9.1/main/pg_hba.conf
 ```
-and change
+change
 ```
 local   all             postgres                                peer
 ```
@@ -46,8 +46,9 @@ to
 ```
 local   all             postgres                                md5
 ```
+Finally, change the SQLALCHEMY_DATABASE_URI in main.py based on your configuration.
 
-### To create a new database
+### Create a new database
 ```
 sudo service postgresql restart
 psql
@@ -55,7 +56,7 @@ psql
 create database module_page
 ```
 
-## If you have not created the database tables or database schema is modified, do below steps to re-create it. 
+## If you have not created the tables or database schema is modified?, do below steps to re-create it. 
 ```
     python
     from main import db
