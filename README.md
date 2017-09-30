@@ -57,9 +57,7 @@ create database module_page
 
 ## If you have not created the database tables or database schema is modified, do below steps to re-create it. 
 ```
-    python
-    from main import db
-    db.create_all()
+    python reinitdb.py
 ```
 
 ## Some Common Database Operations.
