@@ -62,6 +62,21 @@ create database module_page
     db.create_all()
 ```
 
+## Some Common Database Operations.
+```
+# View all tables
+\dt
+
+# View table schema
+\d+ table_name;
+
+# View content of a table
+select * from table_name;
+
+# Delete data from a table
+truncate table table_name;
+```
+
 Make sure that ssl.key and ssl.crt are created, then run
 ```
 python main.py
