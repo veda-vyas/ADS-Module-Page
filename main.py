@@ -13,6 +13,9 @@ from flask.ext.login import LoginManager, login_required, login_user, \
     logout_user, current_user, UserMixin
 from requests_oauthlib import OAuth2Session
 from requests.exceptions import HTTPError
+from config import BaseConfig
+import StringIO
+import csv
 
 root = os.path.join(os.path.dirname(os.path.abspath(__file__)))
 
@@ -29,14 +32,14 @@ class Config:
     APP_NAME = "MSIT Course Page"
     SECRET_KEY = "somethingsecret"
 
-class DevConfig(Config):
-    DEBUG = True
-    SQLALCHEMY_DATABASE_URI = 'postgresql://postgres:veda1997@localhost/module_page'
+# class DevConfig(Config):
+#     DEBUG = True
+#     SQLALCHEMY_DATABASE_URI = 'postgresql://postgres:veda1997@localhost/module_page'
 
-config = {
-    "dev": DevConfig,
-    "default": DevConfig
-}
+# config = {
+#     "dev": DevConfig,
+#     "default": DevConfig
+# }
 
 app = Flask(__name__)
 
@@ -50,7 +53,7 @@ app.logger.setLevel(logging.NOTSET)
 login_log = app.logger
 app.debug = True
 app.secret_key = "some_secret"
-app.config.from_object(config['dev'])
+app.config.from_object(BaseConfig)
 db = SQLAlchemy(app)
 login_manager = LoginManager(app)
 login_manager.login_view = "login"
@@ -210,6 +213,50 @@ def send_javascripts(path):
     app.logger.info("seeking for %s from %s at %s"%(path, request.headers.get('X-Forwarded-For', request.remote_addr), datetime.now()))
     return send_from_directory(root+"/scripts", path)
 
+def get_students_activity():
+        result = Activity.query.all()
+        table = []
+        student_temp = {"name":None, "rollno":None, "Speaking":0, "Writing":0, "Listening":0, "Reading":0}
+        for entry in result:
+            activity = {}
+            activity["email"] = entry.email
+            activity["timestamp"] = entry.timestamp
+            activity["activity"] = entry.name
+            table.append(activity)
+
+        return table
+
+def render_csv_from_student_activity(data):
+        csvList = []
+        header = [
+                    "User",
+                    "Timestamp",
+                    "Activity"
+                ]
+        csvList.append(header)
+        for csv_line in data:
+            row = [csv_line["email"],
+                    csv_line["timestamp"],
+                    csv_line["activity"]
+                ]
+            csvList.append(row)
+        si = StringIO.StringIO()
+        cw = csv.writer(si)
+        app.logger.info(csvList)        
+        cw.writerows(csvList)
+        output = make_response(si.getvalue())
+        output.headers["Content-Disposition"] = "attachment; filename=StudentActivity.csv"
+        output.headers["Content-type"] = "text/csv"
+        return output
+
+@app.route('/downloadStudentActivity')
+@login_required
+def downloadStudentActivity():
+    if request.method == 'GET':
+        data = get_students_activity()
+    return render_csv_from_student_activity(data)
+
 if __name__ == "__main__":
         app.debug = True
+        db.create_all()
         app.run(ssl_context=('./ssl.crt', './ssl.key'))

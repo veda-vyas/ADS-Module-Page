@@ -27,3 +27,17 @@ seeking for navbar.css from 127.0.0.1 at 2017-09-30 11:26:18.892595
 seeking for module.js from 127.0.0.1 at 2017-09-30 11:26:18.918667
 seeking for navbar.css from 127.0.0.1 at 2017-09-30 11:26:22.127472
 seeking for navbar.css from 127.0.0.1 at 2017-09-30 11:26:53.769195
+vedavyas.yeleswarapu@gmail.com
+seeking for navbar.css from 127.0.0.1 at 2017-09-30 12:22:48.399916
+seeking for navbar.css from 127.0.0.1 at 2017-09-30 12:23:20.288872
+seeking for navbar.css from 127.0.0.1 at 2017-09-30 12:23:30.864719
+vedavyas.yeleswarapu@gmail.com
+seeking for navbar.css from 127.0.0.1 at 2017-09-30 12:38:03.849810
+seeking for navbar.css from 127.0.0.1 at 2017-09-30 12:38:41.816377
+seeking for navbar.css from 127.0.0.1 at 2017-09-30 13:00:23.798880
+[datetime.datetime(2017, 9, 30, 7, 30, 23, 652932), u'vedavyas.yeleswarapu@gmail.com', u'HOMEPAGE']
+[{'timestamp': datetime.datetime(2017, 9, 30, 7, 8, 3, 692229), 'email': u'vedavyas.yeleswarapu@gmail.com', 'activity': u'LOGIN'}, {'timestamp': datetime.datetime(2017, 9, 30, 7, 8, 3, 768972), 'email': u'vedavyas.yeleswarapu@gmail.com', 'activity': u'HOMEPAGE'}, {'timestamp': datetime.datetime(2017, 9, 30, 7, 8, 41, 672147), 'email': u'vedavyas.yeleswarapu@gmail.com', 'activity': u'HOMEPAGE'}, {'timestamp': datetime.datetime(2017, 9, 30, 7, 30, 23, 652932), 'email': u'vedavyas.yeleswarapu@gmail.com', 'activity': u'HOMEPAGE'}]
+[{'timestamp': datetime.datetime(2017, 9, 30, 7, 8, 3, 692229), 'email': u'vedavyas.yeleswarapu@gmail.com', 'activity': u'LOGIN'}, {'timestamp': datetime.datetime(2017, 9, 30, 7, 8, 3, 768972), 'email': u'vedavyas.yeleswarapu@gmail.com', 'activity': u'HOMEPAGE'}, {'timestamp': datetime.datetime(2017, 9, 30, 7, 8, 41, 672147), 'email': u'vedavyas.yeleswarapu@gmail.com', 'activity': u'HOMEPAGE'}, {'timestamp': datetime.datetime(2017, 9, 30, 7, 30, 23, 652932), 'email': u'vedavyas.yeleswarapu@gmail.com', 'activity': u'HOMEPAGE'}]
+[{'timestamp': datetime.datetime(2017, 9, 30, 7, 8, 3, 692229), 'email': u'vedavyas.yeleswarapu@gmail.com', 'activity': u'LOGIN'}, {'timestamp': datetime.datetime(2017, 9, 30, 7, 8, 3, 768972), 'email': u'vedavyas.yeleswarapu@gmail.com', 'activity': u'HOMEPAGE'}, {'timestamp': datetime.datetime(2017, 9, 30, 7, 8, 41, 672147), 'email': u'vedavyas.yeleswarapu@gmail.com', 'activity': u'HOMEPAGE'}, {'timestamp': datetime.datetime(2017, 9, 30, 7, 30, 23, 652932), 'email': u'vedavyas.yeleswarapu@gmail.com', 'activity': u'HOMEPAGE'}]
+[['User', 'Timestamp', 'Activity'], [u'vedavyas.yeleswarapu@gmail.com', datetime.datetime(2017, 9, 30, 7, 8, 3, 692229), u'LOGIN'], [u'vedavyas.yeleswarapu@gmail.com', datetime.datetime(2017, 9, 30, 7, 8, 3, 768972), u'HOMEPAGE'], [u'vedavyas.yeleswarapu@gmail.com', datetime.datetime(2017, 9, 30, 7, 8, 41, 672147), u'HOMEPAGE'], [u'vedavyas.yeleswarapu@gmail.com', datetime.datetime(2017, 9, 30, 7, 30, 23, 652932), u'HOMEPAGE']]
+[['User', 'Timestamp', 'Activity'], [u'vedavyas.yeleswarapu@gmail.com', datetime.datetime(2017, 9, 30, 7, 8, 3, 692229), u'LOGIN'], [u'vedavyas.yeleswarapu@gmail.com', datetime.datetime(2017, 9, 30, 7, 8, 3, 768972), u'HOMEPAGE'], [u'vedavyas.yeleswarapu@gmail.com', datetime.datetime(2017, 9, 30, 7, 8, 41, 672147), u'HOMEPAGE'], [u'vedavyas.yeleswarapu@gmail.com', datetime.datetime(2017, 9, 30, 7, 30, 23, 652932), u'HOMEPAGE']]
