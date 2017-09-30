@@ -31,7 +31,7 @@ class Config:
 
 class DevConfig(Config):
     DEBUG = True
-    SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(root, "dev.db")
+    SQLALCHEMY_DATABASE_URI = 'postgresql://postgres:veda1997@localhost/module_page'
 
 config = {
     "dev": DevConfig,
@@ -68,6 +68,13 @@ class User(db.Model, UserMixin):
     tokens = db.Column(db.Text)
     created_at = db.Column(db.DateTime, default=datetime.utcnow())
 
+class Activity(db.Model):
+    __tablename__ = "activity"
+    id = db.Column(db.Integer, primary_key=True)
+    email = db.Column(db.String(100), nullable=False)
+    name = db.Column(db.Text)
+    timestamp = db.Column(db.DateTime, default=datetime.utcnow())
+
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
@@ -90,8 +97,16 @@ def get_google_auth(state=None, token=None):
 @login_required
 def index():
     try:
+        activity = Activity()
+        activity.email = session['email']
+        activity.name = "HOMEPAGE"
+        activity.timestamp = datetime.utcnow()
+        db.session.add(activity)
+
+        db.session.commit()
         return render_template('index.html')
     except Exception as e:
+        app.logger.info(e)
         return render_template('error.html')
 
 @app.route('/login')
@@ -137,20 +152,43 @@ def callback():
             user.tokens = json.dumps(token)
             user.avatar = user_data['picture']
             db.session.add(user)
+
+            activity = Activity()
+            activity.email = email
+            activity.name = "LOGIN"
+            activity.timestamp = datetime.utcnow()
+            db.session.add(activity)
+
             db.session.commit()
             login_user(user)
+            session['email'] = email
+            app.logger.info(session['email'])
             return redirect(url_for('index'))
     return 'Could not fetch your information.'
 
 @app.route('/logout')
 @login_required
 def logout():
+    activity = Activity()
+    activity.email = session['email']
+    activity.name = "LOGOUT"
+    activity.timestamp = datetime.utcnow()
+    db.session.add(activity)
+
+    db.session.commit()
     logout_user()
     return redirect(url_for('login'))
 
 @app.route('/module/<number>')
 @login_required
 def module(number=None):
+    activity = Activity()
+    activity.email = session['email']
+    activity.name = "MODULE"+str(number)
+    activity.timestamp = datetime.utcnow()
+    db.session.add(activity)
+
+    db.session.commit()
     if number==None:
         return render_template('module1.html')
     else:

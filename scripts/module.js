@@ -3,9 +3,6 @@ jQuery(function( $ ){
         e.preventDefault();
         $.cookie('alert', 'closed', { path: '/' });
     });
-    $('#showinstructions').click(function( e ){
-        $('.alert').show();
-    });
 });
 
 jQuery(function( $ ){
