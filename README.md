@@ -17,9 +17,39 @@ sudo apt-get update
 sudo apt-get install postgresql-9.6
 ```
 
-## To start and create a new database
+### To setup a new password
+
 ```
-sudo -i -u postgres
+sudo nano /etc/postgresql/9.1/main/pg_hba.conf
+```
+and change
+```
+local   all             postgres                                peer
+```
+to
+```
+local   all             postgres                                trust
+```
+```
+sudo service postgresql restart
+psql -U postgres
+ALTER USER postgres with password 'your-pass';
+```
+Now change it back
+```
+sudo nano /etc/postgresql/9.1/main/pg_hba.conf
+```
+```
+local   all             postgres                                trust
+```
+to
+```
+local   all             postgres                                md5
+```
+
+### To create a new database
+```
+sudo service postgresql restart
 psql
 (In psql cli)
 create database module_page
