@@ -4,10 +4,11 @@
     <div id="page-wrapper">
         <div class="container-fluid">
             <div class="row" id="main" >
-                <div class="col-sm-12 col-md-12" id="content">
+                <div class="col-sm-12 col-md-7" id="content">
 					<div>
 						<div>
 							<h3 id="form-title">Activity 1 - About student activity sheet</h3>
+							<hr>
 						</div>
 						<div>
 							<div>
@@ -16,9 +17,13 @@
 						</div>
 					</div>
 				</div>
-			</div><br>
-			<div>
-				<form action="/submitactivity/1/1" method="POST" class="col-md-7">
+				<div class="col-sm-12 col-md-5">
+					<h3 class="text-center">Module Content</h3>
+					<hr>
+				</div>
+			</div>
+			<div class="col-sm-12 col-md-7"><br>
+				<form action="/submitactivity/1/1" method="POST">
 				  <div class="form-group form-question well well-sm">
 				    <label for="q1" class="form-question-text">Do you understand the process of filling up the student activity sheet?</label>
 				    <!-- <input type="email" class="form-control form-question-input" id="q1" aria-describedby="emailHelp" placeholder="Enter email"> -->
@@ -38,11 +43,13 @@
 				  </div>
 				  <button type="submit" class="btn btn-primary">Submit</button>
 				</form>
-				<!-- <div class="col-md-5">
-					<h4 class="text-center">Your Submission</h4>
-					<hr>
-					<div class="well well-sm"></div>
-				</div> -->
+			</div>
+			<div class="col-sm-12 col-md-5">
+				<ul style="list-style-type: None">
+					<li><h4><a href="/playvideo/content/1/01.1. Course Introduction.mp4">01.1. Course Introduction<small> [video]</small></a></h4></li>
+					<li><h4><a href="/playvideo/content/1/02.2. Dynamic Connectivity.mp4">02.2. Dynamic Connectivity<small> [video]</small></a></h4></li>
+					<li><h4><a href="/playvideo/content/1/03.3. Quick Find.mp4">03.3. Quick Find<small> [video]</small></a></h4></li>
+				</ul>
 			</div>
         </div>
     </div>
