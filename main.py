@@ -200,6 +200,40 @@ def module(number=None):
         except Exception as e:
             return render_template('error.html')
 
+@app.route('/saveactivity', methods=["POST"])
+@login_required
+def saveactivity():
+    try:
+        data = json.loads(request.get_data())
+        activity = Activity()
+        activity.email = session['email']
+        activity.name = data['name']
+        activity.timestamp = datetime.utcnow()
+        db.session.add(activity)
+
+        db.session.commit()
+        return "success"
+    except Exception as e:
+        app.logger.info(e)
+        return "failure"
+
+@app.route('/activity/<module_number>/<number>')
+@login_required
+def activity(module_number=None,number=None):
+    activity = Activity()
+    activity.email = session['email']
+    activity.name = "MODULE"+str(module_number)+" ACTIVITY"+str(number)
+    activity.timestamp = datetime.utcnow()
+    db.session.add(activity)
+
+    db.session.commit()
+    if module_number==None and number==None:
+        return render_template('error.html')
+    else:
+        try:
+            return render_template('module'+module_number+'/activity'+number+'.html')
+        except Exception as e:
+            return render_template('error.html')
 
 @app.route('/styles/<path:path>')
 @login_required

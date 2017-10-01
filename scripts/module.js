@@ -10,3 +10,11 @@ jQuery(function( $ ){
         $('.alert').hide();
     }
 });
+
+function saveactivity(name){
+	console.log("Submitting: "+name)
+	data = JSON.stringify({"name":name});
+	$.post( "/saveactivity", data, function( data ) {
+	  console.log( data );
+	});
+}
