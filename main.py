@@ -78,6 +78,15 @@ class Activity(db.Model):
     name = db.Column(db.Text)
     timestamp = db.Column(db.DateTime, default=datetime.utcnow())
 
+class ActivityFormSubmissions(db.Model):
+    __tablename__ = "activityformsubmissions"
+    id = db.Column(db.Integer, primary_key=True)
+    email = db.Column(db.String(100), nullable=False)
+    name = db.Column(db.Text)
+    timestamp = db.Column(db.DateTime, default=datetime.utcnow())
+    question = db.Column(db.Text)
+    response = db.Column(db.Text)
+
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
@@ -169,6 +178,11 @@ def callback():
             return redirect(url_for('index'))
     return 'Could not fetch your information.'
 
+@app.route('/error')
+@login_required
+def error():
+    return render_template('error.html')
+
 @app.route('/logout')
 @login_required
 def logout():
@@ -235,6 +249,41 @@ def activity(module_number=None,number=None):
         except Exception as e:
             return render_template('error.html')
 
+@app.route('/submitactivity/<module_number>/<number>', methods=["POST"])
+@login_required
+def submitactivity(module_number=None,number=None):
+    if request.method == "POST":
+        try:
+            activity = Activity()
+            activity.email = session['email']
+            activity.name = "MODULE"+str(module_number)+" ACTIVITY"+str(number)+" SUBMISSION"
+            activity.timestamp = datetime.utcnow()
+            db.session.add(activity)
+
+            db.session.commit()
+            if module_number==None and number==None:
+                return render_template('error.html')
+            else:
+                f = request.form
+                questions = []
+                for key in f.keys():
+                    for value in f.getlist(key):
+                        submission = ActivityFormSubmissions()
+                        submission.email = session['email']
+                        submission.name = "MODULE"+str(module_number)+" ACTIVITY"+str(number)+" SUBMISSION"
+                        submission.timestamp = datetime.utcnow()
+                        submission.question = key
+                        submission.response = value
+                        db.session.add(submission)
+
+                        db.session.commit()
+                        questions.append([key,value])
+                return redirect(url_for("activity",module_number=1,number=1))
+        except Exception as e:
+            app.logger.info(e)
+            return redirect(url_for("error"))
+    else:
+        return redirect(url_for("error"))
 @app.route('/styles/<path:path>')
 @login_required
 def send_stylesheets(path):
@@ -250,14 +299,23 @@ def send_javascripts(path):
 def get_students_activity():
         result = Activity.query.all()
         table = []
-        student_temp = {"name":None, "rollno":None, "Speaking":0, "Writing":0, "Listening":0, "Reading":0}
         for entry in result:
             activity = {}
             activity["email"] = entry.email
             activity["timestamp"] = entry.timestamp
             activity["activity"] = entry.name
+            activity["question"] = ""
+            activity["response"] = ""
             table.append(activity)
-
+        questions = ActivityFormSubmissions.query.all()
+        for question in questions:
+            activity = {}
+            activity["email"] = question.email
+            activity["timestamp"] = question.timestamp
+            activity["activity"] = question.name
+            activity["question"] = question.question
+            activity["response"] = question.response
+            table.append(activity)
         return table
 
 def render_csv_from_student_activity(data):
@@ -265,13 +323,17 @@ def render_csv_from_student_activity(data):
         header = [
                     "User",
                     "Timestamp",
-                    "Activity"
+                    "Activity",
+                    "Question",
+                    "Response"
                 ]
         csvList.append(header)
         for csv_line in data:
             row = [csv_line["email"],
                     csv_line["timestamp"],
-                    csv_line["activity"]
+                    csv_line["activity"],
+                    csv_line["question"],
+                    csv_line["response"],
                 ]
             csvList.append(row)
         si = StringIO.StringIO()

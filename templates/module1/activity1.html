@@ -7,94 +7,42 @@
                 <div class="col-sm-12 col-md-12" id="content">
 					<div>
 						<div>
-							<h3>Activity 1 - </h3>
+							<h3 id="form-title">Activity 1 - About student activity sheet</h3>
 						</div>
 						<div>
 							<div>
-								<p>This module begins with an orientation on Algorithms and Data Structures by Praveen Garimella from 9:00 AM to 10:30 AM.</p>
-							</div>
-						</div>
-					</div><br>
-					<div class="row">
-						<div class="col-sm-12 col-md-12 alert alert-warning">
-							<div>
-								<h4>Instructions</h4><hr>
-							</div>
-							<div>
-								<div>
-									<p>Before you begin the activities run the below command from the extracted videos dump</p>
-									<div>
-										<div class="col-md-6">
-											<p>If you are using Python 2.x</p>
-											<pre>python -m SimpleHTTPServer</pre>	
-										</div>
-										<div class="col-md-6">
-											<p>If you are using Python 3.x</p>
-											<pre>python -m http.server</pre>
-										</div>	
-									</div>
-									<!-- <p>(OR)</p>									 -->
-								</div>
-							</div>
-							<div class="text-right">
-								<button type="button" class="close-alert btn btn-sm btn-primary" data-dismiss="alert" aria-label="Close">Done</button>
-							</div>
-						</div>
-						<div class="col-sm-12 col-md-12">
-							<div>
-								<h4>List of Activities</h4><hr>
-							</div>
-							<div class="col-md-6">
-								<table class="table table-responsive table-hover table-bordered">
-									<thead>
-								      <tr>
-								        <th>S No.</th>
-								        <th>Activity</th>
-								      </tr>
-								    </thead>
-								    <tbody>
-								      <tr>
-								        <td>1</td>
-								        <td><a href="https://docs.google.com/forms/d/e/1FAIpQLSe66wUxLa1zapLW-6heUzxBWp4QdpntilCYih-0T5AZZyVYzg/viewform?usp=sf_link" target="_blank">About student activity sheet</a></td>
-								      </tr>
-								      <tr>
-								        <td>2</td>
-								        <td><a href="https://docs.google.com/forms/d/e/1FAIpQLSesKkY033q7HeuEyp2c9gmcaN60LAGRyKnKNIefCYlIt3hTzA/viewform?usp=sf_link" target="_blank">Summarize the orientation lecture</a></td>
-								      </tr>
-								      <tr>
-								        <td>3</td>
-								        <td><a href="https://docs.google.com/forms/d/e/1FAIpQLScZQtGCaxvdxQiYfJOIAgGWuoNjafn9Fx7A-n1FZnXscRnIFg/viewform?usp=sf_link" target="_blank">Watch video on Course Introduction</a></td>
-								      </tr>
-								      <tr>
-								        <td>4</td>
-								        <td><a href="https://docs.google.com/forms/d/e/1FAIpQLSe8dq_KFhLJ0GEM4WFAc6P6rh89esKaEltSqcys_SJ2bBf1hA/viewform?usp=sf_link" target="_blank">Watch video on Dynamic Connectivity</a></td>
-								      </tr>
-								      <tr>
-								        <td>5</td>
-								        <td><a href="https://docs.google.com/forms/d/e/1FAIpQLSf6GAgmLIr6QjBE_wdQe77MT2c8Oa1Ga1Koiv-ESsn6peHXog/viewform?usp=sf_link" target="_blank">Participate in the Code Review on Dynamic Connectivity</a></td>
-								      </tr>
-								      <tr>
-								        <td>6</td>
-								        <td><a href="https://docs.google.com/forms/d/e/1FAIpQLSdsUVEUmbFtjInVzFlU7_k5hybvau0FGxvqZ2o8hPTnv0yQNA/viewform?usp=sf_link" target="_blank">Watch the video on Quick-Find</a></td>
-								      </tr>
-								      <tr>
-								        <td>7</td>
-								        <td><a href="https://docs.google.com/forms/d/e/1FAIpQLSd-qHwz093i-baIXajEXnOaj5pnULNGVz4O36fYJg4c3dUgEg/viewform?usp=sf_link" target="_blank">Participate in the code review on Quick-Find</a></td>
-								      </tr>
-								      <tr>
-								        <td>8</td>
-								        <td><a href="https://docs.google.com/forms/d/e/1FAIpQLSfNzXNQX8LKTCbvolykFI0OQONNZeXncJ9chupsSmTKve9nEA/viewform?usp=sf_link" target="_blank">Solve the problem using Quick-Find</a></td>
-								      </tr>
-								      <tr>
-								        <td>9</td>
-								        <td><a href="https://docs.google.com/forms/d/e/1FAIpQLSftqimGrL_4xr__QsKGCNVW-jHlMHaNi1opbYZUADCQJawgVQ/viewform?usp=sf_link" target="_blank">Code Quick-Find</a></td>
-								      </tr>
-								    </tbody>
-								</table>	
+								<p id="form-description"></p>
 							</div>
 						</div>
 					</div>
 				</div>
+			</div><br>
+			<div>
+				<form action="/submitactivity/1/1" method="POST" class="col-md-7">
+				  <div class="form-group form-question well well-sm">
+				    <label for="q1" class="form-question-text">Do you understand the process of filling up the student activity sheet?</label>
+				    <!-- <input type="email" class="form-control form-question-input" id="q1" aria-describedby="emailHelp" placeholder="Enter email"> -->
+				    <div class="radio">
+					  <label>
+					    <input type="radio" name="Do you understand the process of filling up the student activity sheet?" id="optionsRadios1" value="Yes, I can fill the sheet without any support from the mentors">
+					    Yes, I can fill the sheet without any support from the mentors
+					  </label>
+					</div>
+					<div class="radio">
+					  <label>
+					    <input type="radio" name="Do you understand the process of filling up the student activity sheet?" id="optionsRadios2" value="No, I need mentor to help me understand how to fill out the form">
+					    No, I need mentor to help me understand how to fill out the form
+					  </label>
+					</div>
+				    <small id="q1desc" class="form-text text-muted form-question notes"></small>
+				  </div>
+				  <button type="submit" class="btn btn-primary">Submit</button>
+				</form>
+				<!-- <div class="col-md-5">
+					<h4 class="text-center">Your Submission</h4>
+					<hr>
+					<div class="well well-sm"></div>
+				</div> -->
 			</div>
         </div>
     </div>
