@@ -24,6 +24,7 @@
 			</div>
 			<div class="col-sm-12 col-md-7"><br>
 				<form action="/submitactivity/1/1" method="POST">
+				  <div id="status"></div>
 				  <div class="form-group form-question well well-sm">
 				    <label for="q1" class="form-question-text">Do you understand the process of filling up the student activity sheet?</label>
 				    <!-- <input type="email" class="form-control form-question-input" id="q1" aria-describedby="emailHelp" placeholder="Enter email"> -->
@@ -43,6 +44,9 @@
 				  </div>
 				  <button type="submit" class="btn btn-primary">Submit</button>
 				</form>
+				<div class="text-right">
+					<a href="/activity/1/2" class="btn btn-default btn-lg">Activity 2</span></a>
+				</div>
 			</div>
 			<div class="col-sm-12 col-md-5">
 				<ul style="list-style-type: None">
@@ -53,4 +57,19 @@
 			</div>
         </div>
     </div>
+	{% for key, value in questions.iteritems() %}
+    <script type="text/javascript">
+    	switch($('input[name="{{ key }}"]').attr('type')){
+    		case "radio":
+    			$('input[value="{{ value }}"]').prop('checked',true)
+				$('#status').html('<div style="color: black; padding: 5px" class="panel panel-success"><b><span class="glyphicon glyphicon-ok" style="color: green" aria-hidden="true"></span> Submitted.</b></div>');
+    			break;
+    		case "textarea":
+    			$('#input[key="{{ key }}"]').prop('value',value)
+    			$('#status').html('<div style="color: black; padding: 5px" class="panel panel-success"><b><span class="glyphicon glyphicon-ok" style="color: green" aria-hidden="true"></span> Submitted.</b></div>');
+    			break;
+    	}
+
+    </script>
+	{% endfor %}
 {% endblock %}

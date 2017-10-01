@@ -18,7 +18,9 @@ import StringIO
 import csv
 import re
 import mimetypes
+import pytz
 
+IST = pytz.timezone('Asia/Kolkata')
 root = os.path.join(os.path.dirname(os.path.abspath(__file__)))
 
 class Auth:
@@ -71,21 +73,21 @@ class User(db.Model, UserMixin):
     name = db.Column(db.String(100), nullable=True)
     avatar = db.Column(db.String(200))
     tokens = db.Column(db.Text)
-    created_at = db.Column(db.DateTime, default=datetime.utcnow())
+    created_at = db.Column(db.DateTime, default=datetime.now(IST))
 
 class Activity(db.Model):
     __tablename__ = "activity"
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(100), nullable=False)
     name = db.Column(db.Text)
-    timestamp = db.Column(db.DateTime, default=datetime.utcnow())
+    timestamp = db.Column(db.DateTime, default=datetime.now(IST))
 
 class ActivityFormSubmissions(db.Model):
     __tablename__ = "activityformsubmissions"
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(100), nullable=False)
     name = db.Column(db.Text)
-    timestamp = db.Column(db.DateTime, default=datetime.utcnow())
+    timestamp = db.Column(db.DateTime, default=datetime.now(IST))
     question = db.Column(db.Text)
     response = db.Column(db.Text)
 
@@ -114,7 +116,7 @@ def index():
         activity = Activity()
         activity.email = session['email']
         activity.name = "HOMEPAGE"
-        activity.timestamp = datetime.utcnow()
+        activity.timestamp = datetime.now(IST)
         db.session.add(activity)
 
         db.session.commit()
@@ -170,7 +172,7 @@ def callback():
             activity = Activity()
             activity.email = email
             activity.name = "LOGIN"
-            activity.timestamp = datetime.utcnow()
+            activity.timestamp = datetime.now(IST)
             db.session.add(activity)
 
             db.session.commit()
@@ -191,7 +193,7 @@ def logout():
     activity = Activity()
     activity.email = session['email']
     activity.name = "LOGOUT"
-    activity.timestamp = datetime.utcnow()
+    activity.timestamp = datetime.now(IST)
     db.session.add(activity)
 
     db.session.commit()
@@ -204,7 +206,7 @@ def module(number=None):
     activity = Activity()
     activity.email = session['email']
     activity.name = "MODULE"+str(number)
-    activity.timestamp = datetime.utcnow()
+    activity.timestamp = datetime.now(IST)
     db.session.add(activity)
 
     db.session.commit()
@@ -224,7 +226,7 @@ def saveactivity():
         activity = Activity()
         activity.email = session['email']
         activity.name = data['name']
-        activity.timestamp = datetime.utcnow()
+        activity.timestamp = datetime.now(IST)
         db.session.add(activity)
 
         db.session.commit()
@@ -239,7 +241,7 @@ def activity(module_number=None,number=None):
     activity = Activity()
     activity.email = session['email']
     activity.name = "MODULE"+str(module_number)+" ACTIVITY"+str(number)
-    activity.timestamp = datetime.utcnow()
+    activity.timestamp = datetime.now(IST)
     db.session.add(activity)
 
     db.session.commit()
@@ -247,8 +249,15 @@ def activity(module_number=None,number=None):
         return render_template('error.html')
     else:
         try:
-            return render_template('module'+module_number+'/activity'+number+'.html')
+            questions = {}
+            responses = ActivityFormSubmissions.query.filter_by(email=session['email']).all()
+            if responses:
+                for response in responses:
+                    questions[response.question] = response.response
+                return render_template('module'+module_number+'/activity'+number+'.html',questions=questions)
+            return render_template('module'+module_number+'/activity'+number+'.html', questions=questions)
         except Exception as e:
+            app.logger.info(e)
             return render_template('error.html')
 
 @app.route('/submitactivity/<module_number>/<number>', methods=["POST"])
@@ -259,7 +268,7 @@ def submitactivity(module_number=None,number=None):
             activity = Activity()
             activity.email = session['email']
             activity.name = "MODULE"+str(module_number)+" ACTIVITY"+str(number)+" SUBMISSION"
-            activity.timestamp = datetime.utcnow()
+            activity.timestamp = datetime.now(IST)
             db.session.add(activity)
 
             db.session.commit()
@@ -273,14 +282,14 @@ def submitactivity(module_number=None,number=None):
                         submission = ActivityFormSubmissions()
                         submission.email = session['email']
                         submission.name = "MODULE"+str(module_number)+" ACTIVITY"+str(number)+" SUBMISSION"
-                        submission.timestamp = datetime.utcnow()
+                        submission.timestamp = datetime.now(IST)
                         submission.question = key
                         submission.response = value
                         db.session.add(submission)
 
                         db.session.commit()
                         questions.append([key,value])
-                return redirect(url_for("activity",module_number=1,number=1))
+                return redirect(url_for("activity",module_number=module_number,number=number))
         except Exception as e:
             app.logger.info(e)
             return redirect(url_for("error"))
@@ -394,7 +403,7 @@ def playvideo(song):
     activity = Activity()
     activity.email = session['email']
     activity.name = "WATCHED VIDEO: "+song
-    activity.timestamp = datetime.utcnow()
+    activity.timestamp = datetime.now(IST)
     db.session.add(activity)
 
     db.session.commit()
