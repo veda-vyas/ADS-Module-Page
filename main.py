@@ -286,6 +286,7 @@ def submitactivity(module_number=None,number=None):
             return redirect(url_for("error"))
     else:
         return redirect(url_for("error"))
+
 @app.route('/styles/<path:path>')
 @login_required
 def send_stylesheets(path):
@@ -390,6 +391,13 @@ def play(song):
 
 @app.route('/playvideo/<path:song>')
 def playvideo(song):
+    activity = Activity()
+    activity.email = session['email']
+    activity.name = "WATCHED VIDEO: "+song
+    activity.timestamp = datetime.utcnow()
+    db.session.add(activity)
+
+    db.session.commit()
     return '<video id="video" controls type="video/mp4" width="100%" src="/play/'+song+'" preload="auto" autoplay>Your browser does not support the video tag.</video>'
 
 if __name__ == "__main__":
