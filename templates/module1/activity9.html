@@ -1,4 +1,13 @@
 {% extends "base.html" %}
+{% block head %}
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/styles/navbar.css">
+	<link rel="stylesheet" href="/styles/fileupload.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> 
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+    <script type="text/javascript" src="/scripts/module.js"></script>
+{% endblock %}
 {% block title %}ADS I - Module 1{% endblock %}
 {% block body %}
     <div id="page-wrapper">
@@ -22,6 +31,19 @@
 			<div class="col-sm-12 col-md-7"><br>
 				<div id="status"></div>
 				<form action="/submitactivity/1/9" method="POST">
+				  <div class="form-group form-question well well-sm">
+				    <label for="q1" class="form-question-text">9.1 Implement the basic version of Quick-Find algorithm. Submit the file once you are done solving it</label>
+					<div class="fileupload fileupload-new" data-provides="fileupload">
+					  <br>
+					  <span class="btn btn-primary btn-file"><span class="fileupload-new">Select file</span>
+					  <span class="fileupload-exists">Change</span>
+					  <input name="9.1 Implement the basic version of Quick-Find algorithm. Submit the file once you are done solving it" type="file" accept=".zip" /></span>&nbsp;&nbsp;
+					  <span class="fileupload-preview"></span>
+					  <a href="#" class="close fileupload-exists" data-dismiss="fileupload" style="float: none">×</a>
+					  <br>
+					  <p id="file-submission"></p>
+					</div>
+				  </div>
 				  <div class="form-group form-question well well-sm">
 				    <label for="q1" class="form-question-text">9.2 Write a summary of your learning from solving this problem.</label>
 				    <textarea class="form-control form-question-input" type="textarea" name="9.2 Write a summary of your learning from solving this problem." id="q1" placeholder="Enter your response here"></textarea>
@@ -100,5 +122,6 @@
     			break;
     	}
     </script>
+    <script type="text/javascript" src="/scripts/fileupload.js"></script>
     {%endfor%}
 {% endblock %}

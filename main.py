@@ -19,6 +19,8 @@ import csv
 import re
 import mimetypes
 import pytz
+from werkzeug.utils import secure_filename
+import zipfile
 
 IST = pytz.timezone('Asia/Kolkata')
 root = os.path.join(os.path.dirname(os.path.abspath(__file__)))
@@ -237,7 +239,7 @@ def saveactivity():
 
 @app.route('/activity/<module_number>/<number>')
 @login_required
-def activity(module_number=None,number=None):
+def activity(module_number=None,number=None,message=None):
     activity = Activity()
     activity.email = session['email']
     activity.name = "MODULE"+str(module_number)+" ACTIVITY"+str(number)
@@ -254,8 +256,8 @@ def activity(module_number=None,number=None):
             if responses:
                 for response in responses:
                     questions[response.question] = response.response
-                return render_template('module'+module_number+'/activity'+number+'.html',questions=questions)
-            return render_template('module'+module_number+'/activity'+number+'.html', questions=questions)
+                return render_template('module'+module_number+'/activity'+number+'.html',questions=questions,message=message)
+            return render_template('module'+module_number+'/activity'+number+'.html', questions=questions,message=message)
         except Exception as e:
             app.logger.info(e)
             return render_template('error.html')
@@ -289,7 +291,50 @@ def submitactivity(module_number=None,number=None):
 
                         db.session.commit()
                         questions.append([key,value])
-                return redirect(url_for("activity",module_number=module_number,number=number))
+                if request.files:
+                    app.logger.info(request.files)
+                    files = request.files
+                    file = files[files.keys()[0]]
+                        
+                    if file.filename == '':
+                        message = 'Error: File not selected. Please upload a .zip file.'
+                        return redirect(url_for("activity",module_number=module_number,number=number,message=message))
+                    
+                    if file:
+                        BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+                        filename = secure_filename(file.filename)
+                        tmp_path = 'content/tmp_upload/'+session['email']+'/'+module_number+"/"+number
+                        directory = os.path.join(BASE_DIR, tmp_path)
+                        if not os.path.exists(directory):
+                            os.makedirs(directory)
+                        file.save(os.path.join(directory, filename))
+                        message = filename
+                        zip_exist = zipfile.is_zipfile(os.path.join(BASE_DIR, tmp_path)+'/'+filename)
+                        if zip_exist or True:
+                            app.logger.info("Success. Extracting contents...")
+                            zf = zipfile.ZipFile(os.path.join(BASE_DIR,tmp_path+'/',filename), 'r')
+                            extract_to = os.path.join(BASE_DIR,"content/"+session['email']+"/"+module_number+"/"+number)
+                            zf.extractall(extract_to)
+                            zf.close()
+                            submission = ActivityFormSubmissions()
+                            submission.email = session['email']
+                            submission.name = "MODULE"+str(module_number)+" ACTIVITY"+str(number)+" FILE UBMISSION"
+                            submission.timestamp = datetime.now(IST)
+                            submission.question = files.keys()[0]
+                            submission.response = extract_to
+                            db.session.add(submission)
+
+                            db.session.commit()
+                            questions.append([files.keys()[0],tmp_path])
+                            app.logger.info("Successfully extracted contents ")
+                        else:
+                            message = "Error: %s file is not a zip file %s"%(filename, zip_exist)
+                            return redirect(url_for("activity",module_number=module_number,number=number,message=message))
+                    else:
+                        message = "Error: file format is not allowed"
+                        return redirect(url_for("activity",module_number=module_number,number=number,message=message))
+                
+                return redirect(url_for("activity",module_number=module_number,number=number,message=message))
         except Exception as e:
             app.logger.info(e)
             return redirect(url_for("error"))
