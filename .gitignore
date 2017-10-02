@@ -3,3 +3,4 @@ logs.log
 ssl.crt
 ssl.key
 config.py
+content/tmp_upload
