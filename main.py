@@ -279,6 +279,7 @@ def submitactivity(module_number=None,number=None):
             else:
                 f = request.form
                 questions = []
+                message = None
                 for key in f.keys():
                     for value in f.getlist(key):
                         submission = ActivityFormSubmissions()
@@ -318,7 +319,7 @@ def submitactivity(module_number=None,number=None):
                             zf.close()
                             submission = ActivityFormSubmissions()
                             submission.email = session['email']
-                            submission.name = "MODULE"+str(module_number)+" ACTIVITY"+str(number)+" FILE UBMISSION"
+                            submission.name = "MODULE"+str(module_number)+" ACTIVITY"+str(number)+" FILE SUBMISSION"
                             submission.timestamp = datetime.now(IST)
                             submission.question = files.keys()[0]
                             submission.response = extract_to
