@@ -84,3 +84,17 @@ python main.py
 Now access
 https://localhost:5000 
 to see the Homepage.
+
+## compile mod_wsgi for python 2.7
+```
+apt-get download libapache2-mod-wsgi
+dpkg --force-all -i libapache2-mod-wsgi
+sudo nano /etc/apache2/sites-available/adsmodulepage.conf
+```
+Add the below line on top all
+```
+LoadModule wsgi_module /usr/lib/apache2/modules/mod_wsgi.so-2.7
+```
+Save it and restart the apache server. 
+
+Note: /usr/lib/apache2/modules/ will have all the compiled \*.so files which may be linked on top of the configuration file.
