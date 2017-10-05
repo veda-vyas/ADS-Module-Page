@@ -4,7 +4,7 @@
     <link rel="stylesheet" href="/styles/navbar.css">
 	<link rel="stylesheet" href="/styles/fileupload.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> 
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
     <script type="text/javascript" src="/scripts/module.js"></script>
 {% endblock %}
@@ -30,7 +30,7 @@
 			</div>
 			<div class="col-sm-12 col-md-7"><br>
 				<div id="status"></div>
-				<form action="/submitactivity/1/9" method="POST">
+				<form action="/submitactivity/1/9" method="POST" enctype="multipart/form-data">
 				  <div class="form-group form-question well well-sm">
 				    <label for="q1" class="form-question-text">9.1 Implement the basic version of Quick-Find algorithm. Submit the file once you are done solving it</label>
 					<div class="fileupload fileupload-new" data-provides="fileupload">
